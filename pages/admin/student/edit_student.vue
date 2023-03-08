@@ -1,6 +1,6 @@
 <template lang="heml">
     <div>
-        <h2>ADD STUDENT</h2>
+        <h2>EDIT STUDENT</h2>
         <v-form>
             <v-row>
                 <v-col>

@@ -4,6 +4,12 @@
             :custom-filter="filterOnlyCapsText">
             <template v-slot:top>
                 <v-row>
+                    <v-col cols="6">
+                        <v-select :items="classs" label="Class" dense class="mx-4"></v-select>
+                    </v-col>
+                    <v-col cols="6">
+                        <v-select :items="rooms" label="Room" dense class="mx-4"></v-select>
+                    </v-col>
                     <v-col cols="9">
                         <v-text-field v-model="search" label="Search (UPPER CASE ONLY)" class="mx-4"></v-text-field>
                     </v-col>
@@ -15,9 +21,14 @@
                 </v-row>
             </template>
             <template v-slot:item.actions="{ item }">
-            <v-btn color="success" :to="item.student_id">
-                <v-icon small class="mr-2">
+            <v-btn color="success" :to="item.student_id" to="./student/edit_student">
+                <v-icon>
                     mdi-pencil
+                </v-icon>
+            </v-btn>
+            <v-btn color="red" :to="item.student_id">
+                <v-icon>
+                    mdi-delete
                 </v-icon>
             </v-btn>
         </template>
@@ -32,7 +43,14 @@ export default {
         return {
             search: '',
             calories: '',
-            desserts: []
+            desserts: [
+                {   student_id:'S15523',
+                    fist_name:'Somsak',
+                    last_name:'Srisuk'
+                }
+            ],
+            classs: ['1', '2', '3', '4','5','6'],
+            rooms: ['1', '2']
         }
     },
     computed: {

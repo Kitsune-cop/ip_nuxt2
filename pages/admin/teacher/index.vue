@@ -1,6 +1,6 @@
 <template lang="html">
     <div>
-        <v-data-table :headers="headers" :items="desserts" item-key="name" class="elevation-1" :search="search"
+        <v-data-table :headers="headers" :items="desserts" item-key="student_id" class="elevation-1" :search="search"
             :custom-filter="filterOnlyCapsText">
             <template v-slot:top>
                 <v-row>
@@ -9,23 +9,28 @@
                     </v-col>
                     <v-col class="pt-6">
                         <v-btn color="success" rounded class="me-2">Search</v-btn>
-                        <v-btn color="primary" rounded to="./student/add_student"><v-icon dark>mdi-plus</v-icon>New Student</v-btn>
+                        <v-btn color="primary" rounded to="./teacher/add_teacher"><v-icon dark>mdi-plus</v-icon>New
+                            Teacher</v-btn>
                     </v-col>
                 </v-row>
             </template>
-            <template v-slot:body.append>
-                <tr>
-                    <td></td>
-                    <td>
-                        <v-text-field v-model="calories" type="number" label="Less than"></v-text-field>
-                    </td>
-                    <td colspan="4"></td>
-                </tr>
-            </template>
+            <template v-slot:item.actions="{ item }">
+            <v-btn color="success" :to="item.teacher" to="./teacher/edit_teacher">
+                <v-icon>
+                    mdi-pencil
+                </v-icon>
+            </v-btn>
+            <v-btn color="red" :to="item.teacher_id">
+                <v-icon>
+                    mdi-delete
+                </v-icon>
+            </v-btn>
+        </template>
         </v-data-table>
     </div>
 </template>
 <script>
+import axios from 'axios';
 export default {
     layout: 'admin',
     data() {
@@ -33,47 +38,29 @@ export default {
             search: '',
             calories: '',
             desserts: [
-                {
-                    name: 'Frozen Yogurt',
-                    calories: 159,
-                    fat: 6.0,
-                    carbs: 24,
-                    protein: 4.0,
-                    iron: 1,
+                {   teacher_id:'T15255',
+                    frist_name:'Somsak',
+                    last_name:'Srisuk'
                 },
-                {
-                    name: 'Ice cream sandwich',
-                    calories: 237,
-                    fat: 9.0,
-                    carbs: 37,
-                    protein: 4.3,
-                    iron: 1,
+                {   teacher_id:'T15256',
+                    frist_name:'Thana',
+                    last_name:'nan'
                 },
-            ]
+            ],
         }
     },
     computed: {
         headers() {
             return [
                 {
-                    text: 'Dessert (100g serving)',
+                    text: 'Teacher id',
                     align: 'start',
-                    sortable: false,
-                    value: 'name',
+                    sortable: true,
+                    value: 'teacher_id',
                 },
-                {
-                    text: 'Calories',
-                    value: 'calories',
-                    filter: value => {
-                        if (!this.calories) return true
-
-                        return value < parseInt(this.calories)
-                    },
-                },
-                { text: 'Fat (g)', value: 'fat' },
-                { text: 'Carbs (g)', value: 'carbs' },
-                { text: 'Protein (g)', value: 'protein' },
-                { text: 'Iron (%)', value: 'iron' },
+                { text: 'First name', value: 'frist_name' },
+                { text: 'Last name', value: 'last_name' },
+                { text: 'Actions', value: 'actions', sortable: false },
             ]
         },
     },
@@ -85,6 +72,13 @@ export default {
                 value.toString().toLocaleUpperCase().indexOf(search) !== -1
         },
     },
+    created() {
+        this.url = 'http://localhost/service/admin/show_teacher_name.php'
+        axios.get(this.url).then((resp) => {
+            console.log(resp.data.response)
+            this.desserts = resp.data.response
+        })
+    }
 }
 </script>
 <style lang="css"></style>
