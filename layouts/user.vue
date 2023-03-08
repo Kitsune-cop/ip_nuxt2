@@ -44,22 +44,23 @@
             <v-container>
                 <v-row>
                     <v-col cols="12" sm="2">
-                        <v-sheet rounded="lg" min-height="268">
+                        <v-card rounded="lg" min-height="268">
                             <!--  -->
-                        </v-sheet>
+                            <Work/>
+                        </v-card>
                     </v-col>
 
                     <v-col cols="12" sm="8">
-                        <v-sheet min-height="70vh" rounded="lg">
+                        <v-card min-height="70vh" rounded="lg">
                             <!--  -->
-                        </v-sheet>
+                        </v-card>
                     </v-col>
 
                     <v-col cols="12" sm="2">
-                        <v-sheet rounded="lg" min-height="268">
+                        <v-card rounded="lg" min-height="268">
                             <!--  -->
                             <Info />
-                        </v-sheet>
+                        </v-card>
                     </v-col>
                 </v-row>
             </v-container>
@@ -69,6 +70,7 @@
   
 <script>
 import Info from '../components/info.vue'
+import Work from '../components/work.vue'
 export default {
     data: () => ({
         links: [
@@ -92,7 +94,8 @@ export default {
         },
     }),
     components: {
-         Info 
+        Work, 
+        Info 
     },
     methods: {
         hendleLogout() {
